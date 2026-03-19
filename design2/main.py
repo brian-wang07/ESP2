@@ -161,12 +161,12 @@ def monte_carlo(df, mine_scale, renewable_ratio, n_trials=100):
 def plot_results(emissions, costs, save_path="monte_carlo_results.png"):
     fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 
-    axes[0].hist(emissions / 1e6, bins=30)
+    axes[0].hist(emissions / 1e6, bins=50)
     axes[0].set_title("Total Emissions (Million kg CO2)")
     axes[0].set_xlabel("Emissions")
     axes[0].set_ylabel("Frequency")
 
-    axes[1].hist(costs, bins=30)
+    axes[1].hist(costs, bins=50)
     axes[1].set_title("Cost per kWh (CAD)")
     axes[1].set_xlabel("Cost")
     axes[1].set_ylabel("Frequency")
@@ -177,7 +177,7 @@ def plot_results(emissions, costs, save_path="monte_carlo_results.png"):
 
 
 def main():
-    df = pd.read_csv("weather/data.csv")
+    df = pd.read_csv("../weather/data.csv")
 
     if "LOCAL_MONTH" in df.columns:
         df["season"] = df["LOCAL_MONTH"].apply(classify_season)
@@ -192,10 +192,10 @@ def main():
         n_trials=100
     )
 
-    print("\n=== RESULTS ===")
-    print(f"Avg Emissions: {np.mean(emissions):.2e} kg CO2")
-    print(f"Avg Cost per kWh: {np.mean(costs):.4f} CAD/kWh")
 
+    print("\n=== RESULTS ===")
+    print(f"Avg Emissions: {pd.Series(emissions).describe()} kg CO2")
+    print(f"Avg Cost per kWh: {pd.Series(costs).describe()} CAD/kWh")
     plot_results(emissions, costs)
 
 if __name__ == "__main__":

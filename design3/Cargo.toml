@@ -1,0 +1,14 @@
+[package]
+name = "design3"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+csv = "1"
+serde = { version = "1", features = ["derive"] }
+rand = "0.9"
+rand_distr = "0.5"
+rayon = "1"
+anyhow = "1"
+types = "0.1.0"
+plotters = "0.3"
