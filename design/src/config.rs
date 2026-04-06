@@ -1,14 +1,14 @@
 #[derive(Debug, Clone, Copy)]
 pub struct SimulationConfig {
-    pub mine_scale: f64,
+    pub throughput_tpd: f64,
     pub renewable_ratio: f64,
     pub n_trials: usize,
 }
 
 impl SimulationConfig {
-    pub fn new(mine_scale: f64, renewable_ratio: f64, n_trials: usize) -> Self {
+    pub fn new(throughput_tpd: f64, renewable_ratio: f64, n_trials: usize) -> Self {
         Self {
-            mine_scale,
+            throughput_tpd,
             renewable_ratio,
             n_trials,
         }
