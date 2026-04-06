@@ -7,8 +7,8 @@ use crate::types::WeatherRecord;
 
 // Social acceptance (Appendix K)
 const SA_BASE: f64 = 0.50;
-const SA_WIND: f64 = 0.30;    // bonus from wind fraction
-const SA_COST: f64 = 0.15;    // spread from stochastic diesel cost
+const SA_WIND: f64 = 0.10;    // bonus from wind fraction
+const SA_COST: f64 = 0.05;    // spread from stochastic diesel cost
 
 #[derive(Debug, Clone)]
 pub struct MonteCarloResults {
