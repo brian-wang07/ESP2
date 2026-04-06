@@ -3,6 +3,7 @@ mod types;
 mod model;
 mod config;
 mod simulation;
+mod test;
 
 use std::io;
 use std::time::Instant;
@@ -126,6 +127,9 @@ fn main() -> anyhow::Result<()> {
         &results.social_acceptance,
     )?;
     println!("\nSaved results to monte_carlo_results.csv");
+
+    //let backtest = test::run_backtest(&weather, throughput_tpd);
+    //test::print_backtest(&backtest, throughput_tpd);
 
     Ok(())
 }
