@@ -15,7 +15,6 @@ pub const ROTOR_AREA: f64 = 3959.0;
 pub const TURBINE_RATED_POWER_KW: f64 = 2300.0;
 
 pub const FUEL_CONSUMPTION: f64 = 0.27; // L/kWh (diesel generator efficiency)
-pub const CO2_PER_LITER: f64 = 2.68;
 
 pub const ENERGY_INTENSITY: f64 = 12.0; // kWh/t (electrical demand per tonne)
 pub const EMISSION_INTENSITY: f64 = 49.0; // kg CO2/t at 0% renewables (total site emissions)
@@ -31,8 +30,6 @@ pub const DIESEL_SIGMA: f64 = 0.2;
 pub struct TrialOutput {
     pub emissions_intensity: f64, // kg CO2/t
     pub cost_per_year: f64,
-    pub n_turbines: usize,
-    pub avg_diesel_kw: f64,
     pub wind_fraction: f64,
 }
 
@@ -173,12 +170,6 @@ pub fn run_single_simulation<R: Rng + ?Sized>(
     let years = n_steps as f64 / 8760.0;
     let cost_per_year = if years > 0.0 { total_cost / years } else { 0.0 };
 
-    let avg_diesel_kw = if n_steps > 0 {
-        total_diesel_kwh / n_steps as f64
-    } else {
-        0.0
-    };
-
     let total_tonnes = (throughput_tpd / 24.0) * n_steps as f64;
     let emissions_intensity = if total_tonnes > 0.0 {
         total_emissions / total_tonnes
@@ -195,8 +186,6 @@ pub fn run_single_simulation<R: Rng + ?Sized>(
     TrialOutput {
         emissions_intensity,
         cost_per_year,
-        n_turbines,
-        avg_diesel_kw,
         wind_fraction,
     }
 }

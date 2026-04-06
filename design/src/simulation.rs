@@ -39,16 +39,20 @@ pub fn monte_carlo(
     let costs: Vec<f64> = trial_results.iter().map(|r| r.cost_per_year).collect();
 
     let cost_mean = costs.iter().sum::<f64>() / costs.len() as f64;
+    let cost_std = {
+        let var = costs.iter().map(|c| (c - cost_mean).powi(2)).sum::<f64>() / costs.len() as f64;
+        var.sqrt()
+    };
 
     let social_acceptance = trial_results
         .iter()
         .map(|r| {
-            let cost_dev = if cost_mean > 0.0 {
-                (cost_mean - r.cost_per_year) / cost_mean
+            let cost_z = if cost_std > 0.0 {
+                (cost_mean - r.cost_per_year) / cost_std
             } else {
                 0.0
             };
-            SA_BASE + SA_WIND * r.wind_fraction + SA_COST * cost_dev
+            (SA_BASE + SA_WIND * r.wind_fraction + SA_COST * cost_z).clamp(0.0, 1.0)
         })
         .collect();
 
